@@ -1,3 +1,4 @@
+using LegionCore.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using LegionCore.Web.Data;
