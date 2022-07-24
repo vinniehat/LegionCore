@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
+using LegionCore.Core.Identity;
 using LegionCore.Core.Models.Api;
 using LegionCore.Core.Models.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,16 +16,15 @@ namespace LegionCore.Web
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
     [Area("Identity")]
-    [ApiController]
     public class ApiController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IConfiguration _configuration;
 
         public ApiController(
-            UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager,
             IConfiguration configuration)
         {
             _userManager = userManager;
@@ -33,14 +33,19 @@ namespace LegionCore.Web
         }
 
         [HttpGet]
-        [Route("get")]
-        public async Task<string> Get()
+        [AllowAnonymous]
+        public async Task<string> UnAuth()
         {
-            return "Hello World!";
+            return "UnAuth!";
+        }
+        
+        [HttpGet]
+        public async Task<string> Auth()
+        {
+            return "Auth!";
         }
 
         [HttpPost]
-        [Route("login")]
         public async Task<IActionResult> Login([FromBody] ApiLoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
@@ -72,7 +77,6 @@ namespace LegionCore.Web
         }
 
         [HttpPost]
-        [Route("register")]
         public async Task<IActionResult> Register([FromBody] ApiRegisterModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
@@ -80,7 +84,7 @@ namespace LegionCore.Web
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     new ApiResponse(HttpStatusCode.BadRequest, null, "User already exists!"));
 
-            IdentityUser user = new()
+            ApplicationUser user = new()
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
@@ -95,44 +99,43 @@ namespace LegionCore.Web
             return Ok(new ApiResponse(HttpStatusCode.OK, "User created successfully!"));
         }
 
-        [HttpPost]
-        [Route("register-admin")]
-        public async Task<IActionResult> RegisterAdmin([FromBody] ApiRegisterModel model)
-        {
-            var userExists = await _userManager.FindByNameAsync(model.Username);
-            if (userExists != null)
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    new ApiResponse(HttpStatusCode.BadRequest, null, "User already exists!"));
-
-            IdentityUser user = new()
-            {
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username
-            };
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    new ApiResponse(HttpStatusCode.BadRequest, null,
-                        "User creation failed! Please check user details and try again."));
-
-            if (!await _roleManager.RoleExistsAsync(ApplicationRole.Admin))
-                await _roleManager.CreateAsync(new IdentityRole(ApplicationRole.Admin));
-            if (!await _roleManager.RoleExistsAsync(ApplicationRole.User))
-                await _roleManager.CreateAsync(new IdentityRole(ApplicationRole.User));
-
-            if (await _roleManager.RoleExistsAsync(ApplicationRole.Admin))
-            {
-                await _userManager.AddToRoleAsync(user, ApplicationRole.Admin);
-            }
-
-            if (await _roleManager.RoleExistsAsync(ApplicationRole.Admin))
-            {
-                await _userManager.AddToRoleAsync(user, ApplicationRole.User);
-            }
-
-            return Ok(new ApiResponse(HttpStatusCode.OK, null, "User created successfully!"));
-        }
+        // [HttpPost]
+        // public async Task<IActionResult> RegisterAdmin([FromBody] ApiRegisterModel model)
+        // {
+        //     var userExists = await _userManager.FindByNameAsync(model.Username);
+        //     if (userExists != null)
+        //         return StatusCode(StatusCodes.Status500InternalServerError,
+        //             new ApiResponse(HttpStatusCode.BadRequest, null, "User already exists!"));
+        //
+        //     ApplicationUser user = new()
+        //     {
+        //         Email = model.Email,
+        //         SecurityStamp = Guid.NewGuid().ToString(),
+        //         UserName = model.Username
+        //     };
+        //     var result = await _userManager.CreateAsync(user, model.Password);
+        //     if (!result.Succeeded)
+        //         return StatusCode(StatusCodes.Status500InternalServerError,
+        //             new ApiResponse(HttpStatusCode.BadRequest, null,
+        //                 "User creation failed! Please check user details and try again."));
+        //
+        //     if (!await _roleManager.RoleExistsAsync(ApplicationRole.Admin))
+        //         await _roleManager.CreateAsync(new ApplicationRole(ApplicationRole.Admin));
+        //     if (!await _roleManager.RoleExistsAsync(ApplicationRole.User))
+        //         await _roleManager.CreateAsync(new ApplicationRole(ApplicationRole.User));
+        //
+        //     if (await _roleManager.RoleExistsAsync(ApplicationRole.Admin))
+        //     {
+        //         await _userManager.AddToRoleAsync(user, ApplicationRole.Admin);
+        //     }
+        //
+        //     if (await _roleManager.RoleExistsAsync(ApplicationRole.Admin))
+        //     {
+        //         await _userManager.AddToRoleAsync(user, ApplicationRole.User);
+        //     }
+        //
+        //     return Ok(new ApiResponse(HttpStatusCode.OK, null, "User created successfully!"));
+        // }
 
         private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
