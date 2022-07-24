@@ -16,14 +16,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="app.db">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      </None>
+      <Folder Include="Data\Databases" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Data\Databases" />
+      <ProjectReference Include="..\LegionCore.Core\LegionCore.Core.csproj" />
     </ItemGroup>
 
 </Project>
