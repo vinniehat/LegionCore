@@ -358,3 +358,5 @@ MigrationBackup/
 .idea/
 
 BUILD/
+
+LegionCore.Infrastructure/Data/Databases/
