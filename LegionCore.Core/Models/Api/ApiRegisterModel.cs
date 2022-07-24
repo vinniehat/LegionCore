@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LegionCore.Core.Models.Api;
 
-public class RegisterModel
+public class ApiRegisterModel
 {
     [Required(ErrorMessage = "User Name is required")]
     public string? Username { get; set; }
