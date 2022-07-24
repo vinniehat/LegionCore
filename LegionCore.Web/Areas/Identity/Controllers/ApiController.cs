@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
+// * [FromXXX] is required for ApiControllers. [FromBody] is default, and is used for the Body. [FromForm] is used for the Form, and what we want.
 namespace LegionCore.Web
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -22,31 +23,21 @@ namespace LegionCore.Web
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IConfiguration _configuration;
 
-        public ApiController(
-            UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager,
-            IConfiguration configuration)
+        public ApiController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
         }
-
         [HttpGet]
-        [AllowAnonymous]
-        public async Task<string> UnAuth()
+        public async Task<string> Test()
         {
-            return "UnAuth!";
-        }
-        
-        [HttpGet]
-        public async Task<string> Auth()
-        {
-            return "Auth!";
+            return "It works!!";
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] ApiLoginModel model)
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(ApiLoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
@@ -77,7 +68,8 @@ namespace LegionCore.Web
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] ApiRegisterModel model)
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(ApiRegisterModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
