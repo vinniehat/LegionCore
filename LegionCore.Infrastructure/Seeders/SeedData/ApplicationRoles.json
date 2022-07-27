@@ -1,0 +1,12 @@
+[
+  {
+    "Priority": 0,
+    "Name": "Admin",
+    "Description": "Admin"
+  },
+  {
+    "Priority": 1,
+    "Name": "User",
+    "Description": "User"
+  }
+]

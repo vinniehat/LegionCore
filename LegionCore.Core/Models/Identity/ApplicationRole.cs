@@ -4,6 +4,6 @@ namespace LegionCore.Core.Models.Identity;
 
 public class ApplicationRole : IdentityRole<int>
 {
-    public const string Admin = "Admin";
-    public const string User = "User";
+    public string Description { get; set; } = "";
+    public int Priority { get; set; } = 100;
 }
