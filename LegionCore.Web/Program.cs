@@ -2,15 +2,16 @@ using System.Text;
 using LegionCore.Core.Identity;
 using LegionCore.Core.Models.Identity;
 using LegionCore.Infrastructure.Data;
-using Microsoft.AspNetCore.Identity;
+using LegionCore.Infrastructure.Helpers.Interfaces;
+using LegionCore.Infrastructure.Helpers.Services;
 using Microsoft.EntityFrameworkCore;
-using LegionCore.Web.Data;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection." + Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
@@ -49,6 +50,18 @@ builder.Services.AddAuthentication()
     });
 
 builder.Services.AddRazorPages();
+
+// Add DI // Seeders
+
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<IService>()
+    .AddClasses()
+    .AsSelf()
+    .AsImplementedInterfaces()
+    .WithTransientLifetime());
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -64,6 +77,15 @@ else
 }
 
 
+// Now that all the services are registered, we can run the seeders.
+
+var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+using (var scope = scopedFactory.CreateScope())
+{
+    var seederService = scope.ServiceProvider.GetService<ApplicationSeederService>();
+    seederService.SeedAsync();
+
+}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
