@@ -1,2 +1,4 @@
-Name,Description,Priority
-Test,TEST,123
+Name,Prefix,Description,Priority
+Webmaster, WM, Webmaster, 99999
+Clone Recruit, CR, Clone Recruit, 1
+Clone Recruit Cadet, CR-C, Clone Recruit Cadet, 2
