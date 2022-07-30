@@ -360,3 +360,5 @@ MigrationBackup/
 BUILD/
 
 LegionCore.Infrastructure/Data/Databases/
+
+LegionCore.Infrastructure/Data/appsettings.json

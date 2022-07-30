@@ -28,4 +28,12 @@
       <ProjectReference Include="..\LegionCore.Core\LegionCore.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="Data\appsettings.json">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>
