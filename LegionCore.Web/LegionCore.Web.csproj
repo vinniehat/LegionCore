@@ -30,4 +30,30 @@
       <Folder Include="Areas\Api" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\_Shared\Error.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\Layouts\_layout_boxed.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\Layouts\_layout_colored_sidebar.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\Layouts\_layout_compact_sidebar.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\Layouts\_layout_horizontal.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\Layouts\_layout_horizontal_boxed.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\Layouts\_layout_horizontal_colored.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\Layouts\_layout_horizontal_topbarlight.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\Layouts\_layout_icon_sidebar.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\Layouts\_layout_light_sidebar.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\Layouts\_layout_preloader.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\_BlankLayout.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\_footer.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\_head_css.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\_horizontal.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\_layout_ico_loading.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\_page_title.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\_right_sidebar.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\_sidebar.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\_title_meta.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\_topbar.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_Shared\_vendor_scripts.cshtml" />
+    </ItemGroup>
+
 </Project>

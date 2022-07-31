@@ -3,9 +3,9 @@
 
 <head>
 
-    @await Html.PartialAsync("~/Views/_Shared/_title_meta.cshtml")
+    @await Html.PartialAsync("~/Views/Shared/_title_meta.cshtml")
     @RenderSection("styles", required: false)
-    @await Html.PartialAsync("~/Views/_Shared/_head_css.cshtml")
+    @await Html.PartialAsync("~/Views/Shared/_head_css.cshtml")
 
 </head>
 
@@ -13,7 +13,7 @@
 
     @RenderBody()
 
-    @*@await Html.PartialAsync("~/Views/_Shared/_footer.cshtml")*@
+    @*@await Html.PartialAsync("~/Views/Shared/_footer.cshtml")*@
 
     <!-- Footer start -->
     <footer class="landing-footer">
@@ -94,7 +94,7 @@
     </footer>
     <!-- Footer end -->
 
-    @*@await Html.PartialAsync("~/Views/_Shared/_vendor_scripts.cshtml")*@
+    @*@await Html.PartialAsync("~/Views/Shared/_vendor_scripts.cshtml")*@
 
     @RenderSection("scripts", required: false)
 
