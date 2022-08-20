@@ -12,6 +12,8 @@
       <PackageReference Include="Discord.Net.Commands" Version="3.7.2" />
       <PackageReference Include="Discord.Net.Rest" Version="3.7.2" />
       <PackageReference Include="Discord.Net.WebSocket" Version="3.7.2" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0-preview.6.22324.4" />
+      <PackageReference Include="NewRelic.Agent.Api" Version="10.0.0" />
     </ItemGroup>
 
     <ItemGroup>

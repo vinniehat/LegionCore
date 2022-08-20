@@ -1,0 +1,20 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:33003",
+      "sslPort": 44349
+    }
+  },
+  "profiles": {
+    "LegionCore.Discord": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "environmentVariables": {
+        "CORECLR_ENABLE_PROFILING": "1",
+        "NEW_RELIC_APP_NAME": "LegionCore.Discord"
+      }
+    }
+  }
+}
