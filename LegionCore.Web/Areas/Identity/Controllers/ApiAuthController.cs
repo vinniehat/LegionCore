@@ -1,6 +1,4 @@
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
@@ -9,10 +7,12 @@ using LegionCore.Core.Models.Api;
 using LegionCore.Core.Models.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
 // * [FromXXX] is required for ApiControllers. [FromBody] is default, and is used for the Body. [FromForm] is used for the Form, and what we want.
-namespace LegionCore.Web
+namespace LegionCore.Web.Areas.Identity.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Produces("application/json")]
@@ -42,7 +42,7 @@ namespace LegionCore.Web
             var user = await _userManager.FindByNameAsync(model.Username);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-                var ApplicationRoles = await _userManager.GetRolesAsync(user);
+                var applicationRoles = await _userManager.GetRolesAsync(user);
 
                 var authClaims = new List<Claim>
                 {
@@ -50,7 +50,7 @@ namespace LegionCore.Web
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
 
-                foreach (var userRole in ApplicationRoles)
+                foreach (var userRole in applicationRoles)
                 {
                     authClaims.Add(new Claim(ClaimTypes.Role, userRole));
                 }
