@@ -35,6 +35,8 @@ namespace LegionCore.Infrastructure.Helpers.Seeders
             {
                 using var stream =
                     new StreamReader("../LegionCore.Infrastructure/Helpers/Seeders/SeedData/ApplicationRoles.csv");
+                var x = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+                Console.WriteLine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory));
 
                 var csv_data = new CsvReader(stream, csv_config);
                 
