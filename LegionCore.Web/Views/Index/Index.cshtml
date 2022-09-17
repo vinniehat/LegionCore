@@ -2,43 +2,43 @@
 @{
     ViewBag.Title = "Dashboard";
     ViewBag.pTitle = "Dashboard";
-    ViewBag.pageTitle = (ViewBag.ModeName == LegionCore.Constants.LAYOUT_VERTICAL) ? "LegionCore" : "Layouts";
+    ViewBag.pageTitle = (ViewBag.ModeName == Constants.LAYOUT_VERTICAL) ? "LegionCore" : "Layouts";
     //Layout = "~/Views/_Shared/_Layout.cshtml";
-    if (ViewBag.ModeName == LegionCore.Constants.LAYOUT_VERTICAL)
+    if (ViewBag.ModeName == Constants.LAYOUT_VERTICAL)
     {
         Layout = "~/Views/_Shared/_Layout.cshtml";
     }
-    else if (ViewBag.ModeName == LegionCore.Constants.LAYOUT_HORIZONTAL)
+    else if (ViewBag.ModeName == Constants.LAYOUT_HORIZONTAL)
     {
         Layout = "~/Views/_Shared/Layouts/_layout_horizontal.cshtml";
         ViewBag.pTitle = "Horizontal";
     }
-    else if (ViewBag.ModeName == LegionCore.Constants.LAYOUT_LIGHT_SIDEBAR)
+    else if (ViewBag.ModeName == Constants.LAYOUT_LIGHT_SIDEBAR)
     {
         Layout = "~/Views/_Shared/Layouts/_layout_light_sidebar.cshtml";
         ViewBag.pTitle = "Light Sidebar";
     }
-    else if (ViewBag.ModeName == LegionCore.Constants.LAYOUT_COMPACT_SIDEBAR)
+    else if (ViewBag.ModeName == Constants.LAYOUT_COMPACT_SIDEBAR)
     {
         Layout = "~/Views/_Shared/Layouts/_layout_compact_sidebar.cshtml";
         ViewBag.pTitle = "Compact Sidebar";
     }
-    else if (ViewBag.ModeName == LegionCore.Constants.LAYOUT_ICON_SIDEBAR)
+    else if (ViewBag.ModeName == Constants.LAYOUT_ICON_SIDEBAR)
     {
         Layout = "~/Views/_Shared/Layouts/_layout_icon_sidebar.cshtml";
         ViewBag.pTitle = "Icon Sidebar";
     }
-    else if (ViewBag.ModeName == LegionCore.Constants.LAYOUT_BOXED)
+    else if (ViewBag.ModeName == Constants.LAYOUT_BOXED)
     {
         Layout = "~/Views/_Shared/Layouts/_layout_boxed.cshtml";
         ViewBag.pTitle = "Boxed Layout";
     }
-    else if (ViewBag.ModeName == LegionCore.Constants.LAYOUT_PRELOADER)
+    else if (ViewBag.ModeName == Constants.LAYOUT_PRELOADER)
     {
         Layout = "~/Views/_Shared/Layouts/_layout_preloader.cshtml";
         ViewBag.pTitle = "Preloader";
     }
-    else if (ViewBag.ModeName == LegionCore.Constants.LAYOUT_COLORED_SIDEBAR)
+    else if (ViewBag.ModeName == Constants.LAYOUT_COLORED_SIDEBAR)
     {
         Layout = "~/Views/_Shared/Layouts/_layout_colored_sidebar.cshtml";
         ViewBag.pTitle = "Colored Sidebar";
