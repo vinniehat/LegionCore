@@ -2,6 +2,7 @@
 using Discord.Commands;
 using Discord.WebSocket;
 using LegionCore.Core.Models;
+using LegionCore.Core.Models.Misc;
 using LegionCore.Web.Models;
 using Newtonsoft.Json;
 

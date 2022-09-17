@@ -7,19 +7,34 @@ using LegionCore.Infrastructure.Helpers.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
+
+//# Initialize Builder
+
 var builder = WebApplication.CreateBuilder(args);
+//# Set custom path for appssettings.json
+
+var appSettingsDirectory = Path.Combine(Directory.GetCurrentDirectory(), "../LegionCore.Infrastructure/Data/appsettings.json");
+builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
+{
+    config.AddJsonFile(appSettingsDirectory, optional: true, reloadOnChange: true);
+});
+
+//# Setup SQL Connection
+
 var configuration = builder.Configuration;
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-// Add services to the container.
+//# Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection." + Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+//# Configure Identity
 
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
     {
@@ -31,8 +46,8 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
         options.SignIn.RequireConfirmedAccount = false;
     })
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews();
 
+//# Add JWT Authentication Service
 builder.Services.AddAuthentication()
     .AddCookie()
     .AddJwtBearer(options =>
@@ -49,9 +64,8 @@ builder.Services.AddAuthentication()
         };
     });
 
-builder.Services.AddRazorPages();
 
-// Add DI // Seeders
+//# Add DI // Seeders
 
 builder.Services.Scan(scan => scan
     .FromAssemblyOf<IService>()
@@ -61,10 +75,13 @@ builder.Services.Scan(scan => scan
     .WithTransientLifetime());
 
 
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+//# Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -77,7 +94,7 @@ else
 }
 
 
-// Now that all the services are registered, we can run the seeders.
+//# Running the Seeders
 
 var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
 using (var scope = scopedFactory.CreateScope())
